@@ -1,0 +1,241 @@
+/*
+Institute of Computer Technology.
+B.Tech. Computer Science and Engineering. 
+Sub : ESFP–I (2CSE102).
+Project-31 Objectives: A (Society Water Bill MS) Society Water management system takes following .
+*/
+/*(Society Water Bill MS)
+INPUTS:
+1) House’s Number
+2) Contact person
+3) House Age
+4) Contact Number
+5) Registry Status
+6) Basic Rental Amount
+7) Tax charged
+8) House Type(Bungalow/Duplex/Flat)
+9) Number of flats
+10) Date of payment
+11) Maintenance Tax
+*/
+/*
+PROJECT 31
+AUTHOR:
+BDA19-RAKSHITA NIRMAL TRIPATHI
+BDA20-HARSH KUMAR
+BDA21-DISHWA SHAH
+
+SOURCES:
+CLASSWORK
+STACKOVERFLOW
+*/
+#include <stdio.h>
+#include<string.h>
+float tax(int c,float a)									//function declaration 
+{
+   if(c>5) 											//check if house age is more than 5
+   {
+   float b;
+   b=a*0.05;
+   return b;											//function if condition is true returns b
+   }
+   return 0;											//function if condition is false returns 0
+}
+float maintain(char hty[10],float b,int nfs)							//function declaration
+{
+float mtain;
+if(strcmp(hty,"b")==0)										//check if house type is bunglow
+  {
+    mtain=b*0.04;
+    return mtain;										//function if house type is bunglow returns 													  mtain
+  }
+  else if(strcmp(hty,"d")==0)									//check if house type is duplex
+  {
+    mtain=b*0.07;
+    return mtain;										//function if house type is duplex returns 													  mtain
+  }
+  else if(nfs>=5)										//as house type is flat than, check if 													number of flat is more than or equal to 5
+  {
+    mtain=b*0.1;
+    return mtain;										//function if number of flats is equal to 													or more than 5 returns mtain
+  }
+  else
+  {
+    return 0;											//fuction if all condition are false 													returns 0;
+  }
+}
+int main()
+{
+char ab[15],ac[15];
+printf("\n");
+printf("\t\tINSTITUTE OF COMPUTER TECHNOLOGY\n \t   B.Tech. Computer Science and Engineering.\n");
+printf("\t\t  --SUB : ESFP–I (2CSE102)--\n");
+printf("\t   --Society Water Bill Management System--\n");
+struct house
+{
+char hb,ht[10];
+int hn,ha;
+/*
+hb-house block
+ht-house type
+hn-house Number
+ha-house Age
+*/
+}ob1;  
+struct details
+{  
+char cp[30],rs[10];
+int nf,d,m,y,i;
+float tc,mt,br,tot;
+double cn;
+}ob2;
+ob2.tc=0;											//tax charged by default is 0
+ob2.mt=0;											//maintanance tax by default is 0
+ob2.nf=0;											//no of flats by default is 0
+  /*
+  cp-contact person
+  rs-registry Status  
+  nf-no. of flats
+  cn-contact number
+  dmy-date,month,year of payment
+  i- used for iterations
+  br-basic rental amount
+  tc- tax charged
+  mt-maintanance tax
+  tot-total
+  cn-contact number
+  */
+  printf("------------------------ENTER HOUSE DETAILS:-------------------------\n");
+  printf("Enter block(a-z or  - for N.A) :"); 							//To ask the block name
+  scanf("%c",&ob1.hb); 										//to scan the block name
+  printf("Enter house number:"); 								//To ask the block number
+  scanf("%d",&ob1.hn);										//To scan the block number
+  printf("Enter contact person name(first & last name):"); 					//To ask the contact person name
+  scanf(" %[^\n]%*c",ob2.cp);  									//To scan the contact person name
+  printf("Enter the age of the house (in years, after its construction):");			//To ask age of the house
+  scanf("%d",&ob1.ha);										//To scan age of the house
+  p:printf("Enter contact number:");								//to ask contact number of the house
+  scanf("%lf",&ob2.cn);										//to scan contact number of the house
+if(ob2.cn<1000000000 || ob2.cn>9999999999)
+{
+printf("invalid number please enter again.\n");
+goto p;
+}
+												
+  a:printf("Enter the registry status of the house(c-confirmed/n-not confirmed):");		//to ask registory status of the house
+  scanf(" %[^\n]%*c",ob2.rs);									//to scan registory status of the house
+if(strcmp(ob2.rs,"c")!=0 && strcmp(ob2.rs,"n")!=0)
+{
+printf("Invalid Input.Please Enter again:\n");
+goto a;
+}
+  printf("Enter Basic Rental Amount:");								//to ask basic rent of the house
+  scanf("%f",&ob2.br);										//to scan basic rent of the house
+  b:printf("Enter house type:(b-Bungalow/d-Duplex/f-Flat )");					//to ask type of the house
+  scanf(" %[^\n]%*c",ob1.ht);									//to scan type of the house
+if(strcmp(ob1.ht,"b")!=0 && strcmp(ob1.ht,"d")!=0 && strcmp(ob1.ht,"f")!=0)
+{
+printf("Invalid Input.Please Enter again:\n");
+goto b;
+}
+  if(strcmp(ob1.ht,"f")==0)									//check if house type is flat.
+  {
+    printf("Enter number of Flats:");								//to ask number of the flats
+    scanf("%d",&ob2.nf);									//to scan number of the flats
+  }
+  c:printf("Enter Date of Payment:");								//to ask date of payment of the house
+  scanf("%d",&ob2.d);										//to scan date of payment of the house
+if(ob2.d<1 || ob2.d>31)
+{
+printf("Invalid Input.Please Enter again:\n");
+goto c;
+}
+  d:printf("Enter Month of Payment:");								//to ask month of payment of the house
+  scanf("%d",&ob2.m);										//to scan month of payment of the house
+if(ob2.m<1 || ob2.m>12)
+{
+printf("Invalid Input.Please Enter again:\n");
+goto d;
+}
+  e:printf("Enter Year of Payment:");								//to ask year of payment of the house
+  scanf("%d",&ob2.y);										//to scan year of payment of the house
+if(ob2.y<1900 || ob2.y>2100)
+{
+printf("Invalid Input.Please Enter again:\n");
+goto e;
+} 
+  ob2.tc=tax(ob1.ha,ob2.br);									//function calling , function tax 													  with two arguments, both float.
+
+  ob2.mt=maintain(ob1.ht,ob2.br,ob2.nf);							//function calling , function 													  maintain with three arguments, ht as 													  char, br as float,nf as int.
+
+  ob2.tot=ob2.br+ob2.tc+ob2.mt;
+  printf("----------------------------HOUSE DETAILS---------------------------------\n");
+  /*printing side */
+  printf("\n------------------------------------BILL-------------------------------------\n");
+  printf("HOUSE : %c-%d",ob1.hb,ob1.hn);							//To print house block-house number.
+  printf("\nContact Person : %s",ob2.cp);							//To print name of contact person.
+  printf("\nAge of the house (after its construction):%d years",ob1.ha);			//To print age of house.
+  printf("\ncontact number:%0.0lf",ob2.cn);							//To print contact number of contact person.
+  printf("\nThe registry status of the house:");						//To print registry status of the house.
+  if(strcmp(ob2.rs,"c")==0)									//check if registry status is c
+  {
+    printf("Confirmed.");
+    strcpy(ab,"Confirmed.");									//if registry status is i.e true
+  }
+ else												//if registry status is not c
+ {
+   printf("Not Confirmed.");
+   strcpy(ab,"Not Confirmed.");
+ }
+ printf("\nHouse type:");									//To print the house type.
+  if(strcmp(ob1.ht,"b")==0)									//check if house type is b   
+  {
+    printf("Bunglow.");										//if true, print bunglow
+    strcpy(ac,"Bunglow.");
+  }
+  else if(strcmp(ob1.ht,"d")==0)								//if false, then check if house type is d
+  {
+    printf("Duplex.");										//if true, print duplex
+    strcpy(ac,"Duplex.");
+  }
+  else if(strcmp(ob1.ht,"f")==0)								//if false, then check if house type is f
+  {
+    printf("Flat.");										//if true, print flat
+    strcpy(ac,"Flat.");
+    printf("\nNumber of Flats:%d",ob2.nf);							//print number of flats too.
+  }
+  printf("\n");
+  printf("\nDate of Payment:%d/%d/%d",ob2.d,ob2.m,ob2.y);					//print date of the payment
+  printf("\nBasic Rental Amount:\t\t%1.4f",ob2.br);						//print basic rental amount
+  printf("\nTax Charged:\t\t\t%1.4f",ob2.tc);							//print tax chrged 
+  printf("\nMaintainance Tax:\t\t%1.4f",ob2.mt);						//print maintainance tax 
+  printf("\nTotal:\t\t\t\t%1.4f",ob2.tot);							//print total
+  printf("\n----------------------------------BILL------------------------------------\n");
+printf("\n");
+printf("PROJECT 31\nAUTHOR:\t\t\t\t\t\tSOURCES:\nBDA19-RAKSHITA NIRMAL TRIPATHI\t\t\tCLASSWORK\nBDA20-HARSH KUMAR\t\t\t\tSTACKOVERFLOW\nBDA21-DISHWA SHAH\n");
+
+
+
+//for file
+char ch[]="\n------------------------------------BILL-------------------------------------";
+//for file
+
+FILE *f;
+f=fopen("pro.c","a+");
+fprintf(f,"%s",ch);
+fprintf(f,"%s:%c-%d","\nHOUSE",ob1.hb,ob1.hn);
+fprintf(f,"%s:%s","\nContact Person",ob2.cp);
+fprintf(f,"%s:%d years","\nAge of the house (after its construction)",ob1.ha);
+fprintf(f,"%s:%0.0lf","\ncontact number",ob2.cn);
+fprintf(f,"%s:%s","\nThe registry status of the house",ab);
+fprintf(f,"%s:%s","\nHouse type",ac);
+fprintf(f,"%s:%d","\nNumber of Flats",ob2.nf);
+fprintf(f,"%s:%d/%d/%d","\nDate of Payment",ob2.d,ob2.m,ob2.y);
+fprintf(f,"%s:\t\t%1.4f","\nBasic Rental Amount",ob2.br);
+fprintf(f,"%s:\t\t\t%1.4f","\nTax Charged",ob2.tc);
+fprintf(f,"%s:\t\t%1.4f","\nMaintainance Tax",ob2.mt);
+fprintf(f,"%s:\t\t\t\t%1.4f","\nTotal",ob2.tot);
+fprintf(f,"%s","\nPROJECT 31\nAUTHOR:\t\t\t\t\t\tSOURCES:\nBDA19-RAKSHITA NIRMAL TRIPATHI\t\t\tCLASSWORK\nBDA20-HARSH KUMAR\t\t\t\tSTACKOVERFLOW\nBDA21-DISHWA SHAH\n");
+fprintf(f,"%s",ch);
+fclose(f);
+}
